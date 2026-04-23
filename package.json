@@ -1,0 +1,53 @@
+{
+  "name": "gitlab-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server that exposes the GitLab REST API as tools for AI agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "gitlab-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node18 --outfile=dist/index.js --format=cjs",
+    "start": "tsx src/index.ts",
+    "dev": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [
+    "mcp",
+    "gitlab",
+    "model-context-protocol",
+    "ai",
+    "devtools",
+    "ci-cd",
+    "merge-requests",
+    "issues",
+    "pipelines"
+  ],
+  "author": "Gonzalo Rando Serna",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "@vitest/ui": "^4.1.4",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.4"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  }
+}
