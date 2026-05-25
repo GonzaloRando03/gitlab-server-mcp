@@ -36,6 +36,7 @@ import { GetCurrentUser } from "@/application/use-cases/user/getCurrentUser";
 import { ListUsers } from "@/application/use-cases/user/listUsers";
 
 import { ListGroups } from "@/application/use-cases/group/listGroups";
+import { GetGroup } from "@/application/use-cases/group/getGroup";
 import { ListGroupMembers } from "@/application/use-cases/group/listGroupMembers";
 
 export interface AppContainer {
@@ -69,6 +70,7 @@ export interface AppContainer {
   listUsers: ListUsers;
 
   listGroups: ListGroups;
+  getGroup: GetGroup;
   listGroupMembers: ListGroupMembers;
 }
 
@@ -111,6 +113,7 @@ export function createContainer(config: GitLabApiConfig): AppContainer {
     listUsers: new ListUsers(userCtrl),
 
     listGroups: new ListGroups(groupCtrl),
+    getGroup: new GetGroup(groupCtrl),
     listGroupMembers: new ListGroupMembers(groupCtrl),
   };
 }

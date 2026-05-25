@@ -70,6 +70,51 @@ export const toolList = {
         required: ["groupId"],
       },
     },
+    {
+      name: "get_group",
+      description:
+        "Gets details of a specific GitLab group by numeric ID or by path (e.g., 'group/subgroup'). The path is automatically URL-encoded — pass it raw.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          groupId: {
+            type: "string",
+            description: "Numeric group ID or raw path like 'group/subgroup'",
+          },
+        },
+        required: ["groupId"],
+      },
+    },
+    {
+      name: "get_groups_by_name",
+      description:
+        "Searches GitLab groups by name and returns all matching groups with their IDs.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            description: "Group name to search for (partial match)",
+          },
+          page: { type: "number", description: "Page number" },
+          perPage: { type: "number", description: "Items per page" },
+          orderBy: {
+            type: "string",
+            description: "Order field (id, name, path)",
+          },
+          sort: {
+            type: "string",
+            enum: ["asc", "desc"],
+            description: "Sort order",
+          },
+          minAccessLevel: {
+            type: "number",
+            description: "Minimum access level filter",
+          },
+        },
+        required: ["name"],
+      },
+    },
 
     // ── Projects ─────────────────────────────────────────────────────────────
     {
