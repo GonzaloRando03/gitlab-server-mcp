@@ -104,14 +104,14 @@ export const toolList = {
     {
       name: "get_project",
       description:
-        "Gets details of a specific GitLab project by ID or URL-encoded path (e.g., 'group%2Fproject').",
+        "Gets details of a specific GitLab project by numeric ID or by path (e.g., 'group/subgroup/project'). The path is automatically URL-encoded — pass it raw.",
       inputSchema: {
         type: "object",
         properties: {
           projectId: {
-            type: ["number", "string"],
+            type: "string",
             description:
-              "Project ID (numeric) or URL-encoded path (e.g., 'group%2Fproject')",
+              "Numeric project ID or raw path like 'group/subgroup/project'",
           },
         },
         required: ["projectId"],
