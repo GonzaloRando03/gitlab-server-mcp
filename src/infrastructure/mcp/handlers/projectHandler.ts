@@ -30,6 +30,15 @@ export async function handleProject(
       return c.getProject.handle(
         args.projectId as Parameters<GetProject["handle"]>[0],
       );
+    case "get_projects_by_name":
+      return c.listProjects.handle({
+        search: args.name as string,
+        page: args.page as number | undefined,
+        perPage: args.perPage as number | undefined,
+        membership: args.membership as boolean | undefined,
+        orderBy: args.orderBy as string | undefined,
+        sort: args.sort as string | undefined,
+      });
     case "list_branches":
       return c.listBranches.handle(
         args as Parameters<ListBranches["handle"]>[0],

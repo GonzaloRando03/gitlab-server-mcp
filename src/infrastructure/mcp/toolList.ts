@@ -103,13 +103,48 @@ export const toolList = {
     },
     {
       name: "get_project",
-      description: "Gets details of a specific GitLab project.",
+      description:
+        "Gets details of a specific GitLab project by ID or URL-encoded path (e.g., 'group%2Fproject').",
       inputSchema: {
         type: "object",
         properties: {
-          projectId: { type: "number", description: "Project ID" },
+          projectId: {
+            type: ["number", "string"],
+            description:
+              "Project ID (numeric) or URL-encoded path (e.g., 'group%2Fproject')",
+          },
         },
         required: ["projectId"],
+      },
+    },
+    {
+      name: "get_projects_by_name",
+      description:
+        "Searches GitLab projects by name and returns all matching projects with their IDs.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string",
+            description: "Project name to search for (partial match)",
+          },
+          page: { type: "number", description: "Page number" },
+          perPage: { type: "number", description: "Items per page" },
+          membership: {
+            type: "boolean",
+            description: "Only projects where user is a member",
+          },
+          orderBy: {
+            type: "string",
+            description: "Order field (id, name, path, created_at, updated_at)",
+          },
+          sort: {
+            type: "string",
+            enum: ["asc", "desc"],
+            description: "Sort order",
+          },
+        },
+        required: ["name"],
       },
     },
     {

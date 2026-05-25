@@ -81,22 +81,22 @@ The server follows a clean layered architecture:
 
 Authentication and the server URL are configured via **environment variables**:
 
-| Environment variable | Description                                           |
-| --------------------- | ----------------------------------------------------- |
-| `GITLAB_URL`          | Base URL of the GitLab instance (defaults to `https://gitlab.com`) |
-| `GITLAB_TOKEN`        | Personal Access Token with required scopes            |
+| Environment variable | Description                                                        |
+| -------------------- | ------------------------------------------------------------------ |
+| `GITLAB_URL`         | Base URL of the GitLab instance (defaults to `https://gitlab.com`) |
+| `GITLAB_TOKEN`       | Personal Access Token with required scopes                         |
 
 ### Token Scopes
 
 The required scopes depend on the operations you want to perform:
 
-| Scope | Description |
-|-------|-------------|
-| `read_api` | Read access to the API (projects, MRs, issues, pipelines, etc.) |
-| `api` | Full API access including write operations |
-| `read_user` | Read user information |
-| `read_repository` | Read repository files and branches |
-| `write_repository` | Push and merge operations |
+| Scope              | Description                                                     |
+| ------------------ | --------------------------------------------------------------- |
+| `read_api`         | Read access to the API (projects, MRs, issues, pipelines, etc.) |
+| `api`              | Full API access including write operations                      |
+| `read_user`        | Read user information                                           |
+| `read_repository`  | Read repository files and branches                              |
+| `write_repository` | Push and merge operations                                       |
 
 ---
 
@@ -165,57 +165,59 @@ In `claude_desktop_config.json`:
 
 ### Users
 
-| Tool | Description | Required params |
-| ---- | ----------- | ---------------- |
-| `get_current_user` | Gets the currently authenticated GitLab user | — |
-| `list_users` | Lists all GitLab users with optional search | — |
+| Tool               | Description                                  | Required params |
+| ------------------ | -------------------------------------------- | --------------- |
+| `get_current_user` | Gets the currently authenticated GitLab user | —               |
+| `list_users`       | Lists all GitLab users with optional search  | —               |
 
 ### Groups
 
-| Tool | Description | Required params |
-| ---- | ----------- | ---------------- |
-| `list_groups` | Lists all GitLab groups the user has access to | — |
-| `list_group_members` | Lists members of a GitLab group | `groupId` |
+| Tool                 | Description                                    | Required params |
+| -------------------- | ---------------------------------------------- | --------------- |
+| `list_groups`        | Lists all GitLab groups the user has access to | —               |
+| `list_group_members` | Lists members of a GitLab group                | `groupId`       |
 
 ### Projects
 
-| Tool | Description | Required params |
-| ---- | ----------- | ---------------- |
-| `list_projects` | Lists GitLab projects with optional filters | — |
-| `get_project` | Gets details of a specific GitLab project | `projectId` |
-| `list_branches` | Lists all branches in a GitLab project | `projectId` |
-| `list_commits` | Lists commits in a GitLab project | `projectId` |
+| Tool                   | Description                                                | Required params |
+| ---------------------- | ---------------------------------------------------------- | --------------- |
+| `list_projects`        | Lists GitLab projects with optional filters                | —               |
+| `get_project`          | Gets details of a project by ID or URL-encoded path        | `projectId`     |
+| `get_projects_by_name` | Searches projects by name and returns all matches with IDs | `name`          |
+| `list_group_projects`  | Lists all projects within a group, including subgroups     | `groupId`       |
+| `list_branches`        | Lists all branches in a GitLab project                     | `projectId`     |
+| `list_commits`         | Lists commits in a GitLab project                          | `projectId`     |
 
 ### Merge Requests
 
-| Tool | Description | Required params |
-| ---- | ----------- | ---------------- |
-| `list_mrs` | Lists merge requests in a GitLab project | `projectId` |
-| `get_mr` | Gets details of a specific merge request | `projectId`, `mrIid` |
-| `create_mr` | Creates a new merge request | `projectId`, `source_branch`, `target_branch`, `title` |
-| `approve_mr` | Approves a merge request | `projectId`, `mrIid` |
-| `merge_mr` | Merges a merge request | `projectId`, `mrIid` |
-| `list_mr_notes` | Lists notes on a merge request | `projectId`, `mrIid` |
-| `create_mr_note` | Adds a note to a merge request | `projectId`, `mrIid`, `body` |
+| Tool             | Description                              | Required params                                        |
+| ---------------- | ---------------------------------------- | ------------------------------------------------------ |
+| `list_mrs`       | Lists merge requests in a GitLab project | `projectId`                                            |
+| `get_mr`         | Gets details of a specific merge request | `projectId`, `mrIid`                                   |
+| `create_mr`      | Creates a new merge request              | `projectId`, `source_branch`, `target_branch`, `title` |
+| `approve_mr`     | Approves a merge request                 | `projectId`, `mrIid`                                   |
+| `merge_mr`       | Merges a merge request                   | `projectId`, `mrIid`                                   |
+| `list_mr_notes`  | Lists notes on a merge request           | `projectId`, `mrIid`                                   |
+| `create_mr_note` | Adds a note to a merge request           | `projectId`, `mrIid`, `body`                           |
 
 ### Issues
 
-| Tool | Description | Required params |
-| ---- | ----------- | ---------------- |
-| `list_issues` | Lists issues in a GitLab project | `projectId` |
-| `get_issue` | Gets details of a specific issue | `projectId`, `issueIid` |
-| `create_issue` | Creates a new issue | `projectId`, `title` |
-| `close_issue` | Closes an issue | `projectId`, `issueIid` |
-| `add_comment_to_issue` | Adds a comment to an issue | `projectId`, `issueIid`, `body` |
+| Tool                   | Description                      | Required params                 |
+| ---------------------- | -------------------------------- | ------------------------------- |
+| `list_issues`          | Lists issues in a GitLab project | `projectId`                     |
+| `get_issue`            | Gets details of a specific issue | `projectId`, `issueIid`         |
+| `create_issue`         | Creates a new issue              | `projectId`, `title`            |
+| `close_issue`          | Closes an issue                  | `projectId`, `issueIid`         |
+| `add_comment_to_issue` | Adds a comment to an issue       | `projectId`, `issueIid`, `body` |
 
 ### Pipelines
 
-| Tool | Description | Required params |
-| ---- | ----------- | ---------------- |
-| `list_pipelines` | Lists pipelines in a GitLab project | `projectId` |
-| `trigger_pipeline` | Triggers a new pipeline | `projectId`, `ref` |
-| `retry_pipeline` | Retries a failed or canceled pipeline | `projectId`, `pipelineId` |
-| `list_jobs` | Lists jobs in a pipeline | `projectId`, `pipelineId` |
+| Tool               | Description                           | Required params           |
+| ------------------ | ------------------------------------- | ------------------------- |
+| `list_pipelines`   | Lists pipelines in a GitLab project   | `projectId`               |
+| `trigger_pipeline` | Triggers a new pipeline               | `projectId`, `ref`        |
+| `retry_pipeline`   | Retries a failed or canceled pipeline | `projectId`, `pipelineId` |
+| `list_jobs`        | Lists jobs in a pipeline              | `projectId`, `pipelineId` |
 
 ---
 
